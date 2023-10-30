@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form action="">
+<form action="", method="post">
     {{ form.csrf_token }}
     <fieldset>
         {{ form.contact.label }}
@@ -14,5 +14,9 @@
     </fieldset>
     {{ form.submit() }}
 </form>
+
+<div class="row">
+    <h1>{{ contact }}</h1>
+</div>
 
 {% endblock %}
