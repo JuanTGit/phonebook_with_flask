@@ -2,6 +2,8 @@ from phonebook import app
 from flask import render_template, redirect, url_for
 from phonebook.forms import PhonebookForm, RegisterForm, LoginForm
 from phonebook.models import Contact, User
+from flask_login import login_user, logout_user
+
 
 @app.route('/')
 def index():
@@ -24,8 +26,28 @@ def register():
         User(username=username, email=email, password=password)
 
         return redirect(url_for('login'))
-    return redirect(url_for('register', form=form))
-        
+    return render_template('register.html', form=form)
+
+@app.route('/login', methods=["GET", "POST"])   
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        user = User.query.filter_by(username=username).first()
+
+        if not user or not user.check_password(password):
+            print('Incorrect username or password.')
+            return redirect(url_for('login'))
+        login_user(user)
+        return redirect(url_for('index'))
+    return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 
