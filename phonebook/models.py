@@ -32,7 +32,7 @@ class Contact(db.Model):
     phone_number = db.Column(db.String(10), unique=True, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         db.session.add(self)
         db.session.commit()

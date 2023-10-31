@@ -7,7 +7,8 @@ from flask_login import login_user, logout_user
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    contacts = Contact.query.all()
+    return render_template('index.html', contacts=contacts)
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
@@ -55,10 +56,21 @@ def logout():
 def phonebook():
     form = PhonebookForm()
     if form.validate_on_submit():
-        contact = form.contact.data
+        # Assign user data from form to contact and phone number
+        contact_name = form.contact_name.data
         phone_number = form.phone_number.data
 
-        # Contact(contact_name=contact, phone_number=phone_number)
+        # Check if phone number is in our database
+        used_contact = Contact.query.filter_by(phone_number=phone_number).first()
+
+        # If phone number is in database refresh page
+        if used_contact:
+            print('This phone number is already assigned.')
+            return redirect(url_for('phonebook'))
+        # Else we add the contact to our database
+        Contact(contact_name=contact_name, phone_number=phone_number)
+
+
         return redirect(url_for('phonebook'))
 
     return render_template('phonebook.html', form=form)

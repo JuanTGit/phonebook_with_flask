@@ -3,20 +3,29 @@
 {% block content %}
 
 <form action="", method="post">
+    <h1 class="d-flex justify-content-center">Register Contact</h1>
     {{ form.csrf_token }}
-    <fieldset>
-        {{ form.contact.label }}
-        {{ form.contact(class='form-control', placeholder='Contact Name') }}
-    </fieldset>
-    <fieldset>
-        {{ form.phone_number.label }}
-        {{ form.phone_number(class='form-control', placeholder='Phone Number') }}
-    </fieldset>
-    {{ form.submit() }}
+    <div class="form-group">
+        <div class="col-lg-12 d-flex justify-content-center mb-3">
+            <fieldset class="w-25">
+                {{ form.contact_name.label }}
+                {{ form.contact_name(class='form-control', placeholder='Contact Name') }}
+            </fieldset>
+        </div>
+        <div class="col-lg-12 d-flex justify-content-center mb-3">
+            <fieldset class="w-25">
+                {{ form.phone_number.label }}
+                {{ form.phone_number(class='form-control', placeholder='Phone Number') }}
+            </fieldset>
+        </div>
+    </div>
+    <div class="col-lg-12 d-flex justify-content-center">
+        {{ form.submit(class='btn btn-outline-success w-25') }}
+    </div>
 </form>
 
-<div class="row">
+<!-- <div class="row">
     <h1>{{ contact }}</h1>
-</div>
+</div> -->
 
 {% endblock %}
