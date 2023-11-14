@@ -40,3 +40,38 @@ class Contact(db.Model):
     def __repr__(self) -> str:
         return f"<Contact|{self.contact_name} = {self.phone_number}>"
     
+
+"""
+CREATE USER
+flask shell
+    user1 = User(username='username', email='email@email.com', password='password')
+    db.session.add(user)
+    db.session.commit()
+    ADDS CREATED USER TO DATABASE
+
+QUERY DATA
+https://docs.sqlalchemy.org/en/14/core/metadata.html?highlight=endswith#sqlalchemy.schema.Column
+
+    User.query.all() 
+    User.query.first() <- Outputs first user
+    User.query.filter_by(username='user').first()/.all()
+                      Class|Column|Filter
+    User.query.filter(User.username *expression* (*filter*)).all()
+        expressions:
+            User.username.contains('an')
+            User.id > 3
+            User.id.between(1, 3 )
+            User.email.endswith('.com')
+        How to do an 'and' == ,
+            User.username.startswith('b'), User.id >= 2
+        How to do an 'order by'
+            User.query.order_by(User.email).all()
+            User.query.order_by(User.username).all()
+            User.query.order_by(User.username).filter(User.username.contains('b')).all()
+        How to do an 'or'
+            User.query.filter((User.username.contains('b')) | (User.id == 3)).all()
+        How to use 'like'
+            users_with_gmail = User.query.filter(User.email.like('%@gmail.com%')).all()
+
+            
+"""
